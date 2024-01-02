@@ -1,11 +1,19 @@
+import time
 from concurrent import futures
-from google.cloud import pubsub_v1
 from typing import Callable
+
+
+from google.cloud import pubsub_v1
 
 PROJECT_ID = "lab-workspace-318620"
 TOPIC_ID = "request-processing-message-topic"
+batch_settings = pubsub_v1.types.BatchSettings(
+    max_messages=10,  # default 100
+    max_bytes=1024,  # default 1 MB
+    max_latency=3,  # default 10 ms
+)
 
-publisher = pubsub_v1.PublisherClient()
+publisher = pubsub_v1.PublisherClient(batch_settings)
 topic_path = publisher.topic_path(PROJECT_ID, TOPIC_ID)
 publish_futures = []
 
@@ -21,7 +29,8 @@ def get_callback(
 
     return callback
 
-for i in range(10):
+for i in range(1):
+    #time.sleep(2)
     data = str(i)
     # When you publish a message, the client returns a future.
     publish_future = publisher.publish(topic_path, data.encode("utf-8"))

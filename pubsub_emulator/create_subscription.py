@@ -14,7 +14,13 @@ subscription_path = subscriber.subscription_path(PROJECT_ID, SUBSCRIPTION_ID)
 # close the underlying gRPC channel when done.
 with subscriber:
     subscription = subscriber.create_subscription(
-        request={"name": subscription_path, "topic": topic_path}
+        request={
+            "name": subscription_path,
+            "topic": topic_path,
+            "enable_exactly_once_delivery": True,
+            "ack_deadline_seconds": 5,
+        }
     )
-
-print(f"Subscription created: {subscription}")
+    print(
+        f"Created subscription with exactly once delivery enabled: {subscription}"
+    )
