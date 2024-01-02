@@ -37,6 +37,7 @@ Make sure you have a properly Python & Poetry environment with version ~3.10.
 Most useful commands are listed as follows:
 
     ```sh
+    make build
     make create-topic
     make create-subscription
     make produce
