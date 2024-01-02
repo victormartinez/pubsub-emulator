@@ -38,6 +38,7 @@ Most useful commands are listed as follows:
 
     ```sh
     make build
+    make up
     make create-topic
     make create-subscription
     make produce
